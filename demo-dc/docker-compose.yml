@@ -1,0 +1,32 @@
+version: '3'
+
+
+services: 
+    frontend:
+        container_name: demo_ui
+        build:
+            context: ./helloUIs
+            dockerfile: Dockerfile
+        image: hello/demo_ui
+        ports: 
+            - "8080:80"
+        volumes: 
+            - ./helloUIs:/app
+    
+    backend:
+        container_name: demo_be
+        build:
+            context: ./helloBE
+            dockerfile: Dockerfile
+        image: hello/demo_be
+        ports: 
+            - "9091:9091"
+        volumes: 
+            - ./helloBE:/usr/src/app
+        depends_on: 
+            - db
+    
+    db:
+        container_name: demo_db
+        build: ./database
+    
